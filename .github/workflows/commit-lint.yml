@@ -14,10 +14,13 @@ jobs:
   fetch-depth-plus-one-with-ref:
     runs-on: ubuntu-latest
     steps:
+      - name: Compute ${{ github.event.pull_request.commits }} + 1
+        id: nb-of-commits
+        run: echo "::set-output name=nb::$((${{ github.event.pull_request.commits }} + 1))"
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: ${{ fromJSON(github.event.pull_request.commits) + 1 }}
+          fetch-depth: ${{ steps.nb-of-commits.outputs.nb }}
       - run: git log --oneline
   fetch-depth-no-plus-one:
     runs-on: ubuntu-latest
@@ -29,7 +32,10 @@ jobs:
   fetch-depth-plus-one:
     runs-on: ubuntu-latest
     steps:
+      - name: Compute ${{ github.event.pull_request.commits }} + 1
+        id: nb-of-commits
+        run: echo "::set-output name=nb::$((${{ github.event.pull_request.commits }} + 1))"
       - uses: actions/checkout@v2
         with:
-          fetch-depth: ${{ fromJSON(github.event.pull_request.commits) + 1 }}
+          fetch-depth: ${{ steps.nb-of-commits.outputs.nb }}
       - run: git log --oneline
