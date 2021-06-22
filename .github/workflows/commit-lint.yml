@@ -39,3 +39,8 @@ jobs:
         with:
           fetch-depth: ${{ steps.nb-of-commits.outputs.nb }}
       - run: git log --oneline
+  fetch-default:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git log --oneline
