@@ -3,20 +3,5 @@ name: "Commit messages adheres to guidelines at https://goo.gl/p2fr5Q"
 on: [pull_request]
 
 jobs:
-  with-ref:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          # Last 100 commits should be enough for a PR
-          fetch-depth: 100
-      - run: git log --oneline
-  without-ref:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          # Last 100 commits should be enough for a PR
-          fetch-depth: 100
-      - run: git log --oneline
+  what-is-commit:
+    -run: echo ${{ github.event.pull_request.commits }}
