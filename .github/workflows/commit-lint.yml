@@ -3,7 +3,33 @@ name: "Commit messages adheres to guidelines at https://goo.gl/p2fr5Q"
 on: [pull_request]
 
 jobs:
-  checkout-with-ref:
+  fetch-depth-no-plus-one-with-ref:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.pull_request.commits }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: ${{ github.event.pull_request.commits }}
+      - run: git log --oneline
+  fetch-depth-plus-one-with-ref:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: ${{ github.event.pull_request.commits }} + 1
+      - run: git log --oneline
+  fetch-depth-no-plus-one:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: ${{ github.event.pull_request.commits }}
+      - run: git log --oneline
+  fetch-depth-plus-one:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: ${{ github.event.pull_request.commits }} + 1
+      - run: git log --oneline
