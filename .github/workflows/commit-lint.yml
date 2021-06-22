@@ -3,5 +3,7 @@ name: "Commit messages adheres to guidelines at https://goo.gl/p2fr5Q"
 on: [pull_request]
 
 jobs:
-  what-is-commit:
-    -run: echo ${{ github.event.pull_request.commits }}
+  checkout-with-ref:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.pull_request.commits }}
